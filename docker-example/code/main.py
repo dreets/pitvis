@@ -108,12 +108,12 @@ if __name__ == "__main__":
     parser.add_argument(
         "--pt_input",
         type=str,
-        help="directory of the test dataset images './inputs/{int_video}/'"
+        help="directory of the test dataset images './data/inputs/{int_video}/'"
     )
     parser.add_argument(
         "--pt_output",
         type=str,
-        help="filepath of the annotation predictions './outputs/{int_video}.csv'"
+        help="filepath of the annotation predictions './data/outputs/{int_video}.csv'"
     )
     args = vars(parser.parse_args())
     SystemExit(main(pt_input=Path(args["pt_input"]), pt_output=Path(args["pt_output"])))
