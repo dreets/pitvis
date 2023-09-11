@@ -19,7 +19,12 @@ def main():
 def calculate_steps_evaluation_metric(ls_trues: List[int], ls_preds: List[int]) -> float:
     """Calculate the step evaluation metric from a ground-truth list and prediction list."""
     ls_trues_clean, ls_preds_clean = clean_steps(ls_trues=ls_trues, ls_preds=ls_preds)
-    flt_f1_score: float = metrics.f1_score(y_true=ls_trues_clean, y_pred=ls_preds_clean, average="macro")
+    flt_f1_score: float = metrics.f1_score(
+        y_true=ls_trues_clean,
+        y_pred=ls_preds_clean,
+        average="macro",
+        zero_division=1,
+    )
     flt_edit_score: float = calculate_edit_score(ls_trues=ls_trues_clean, ls_preds=ls_preds_clean, bl_norm=True)
     flt_metric: float = (flt_f1_score + flt_edit_score) / 2
     return flt_metric
