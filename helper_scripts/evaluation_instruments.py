@@ -19,7 +19,12 @@ def main():
 def calculate_insts_evaluation_metric(ls_trues: List[List], ls_preds: List[List]) -> float:
     """Calculate the instrument evaluation metric from a ground-truth list and prediction list."""
     df_trues_encoded, df_preds_encoded = clean_insts(ls_trues=ls_trues, ls_preds=ls_preds)
-    flt_f1_score: float = metrics.f1_score(y_true=df_trues_encoded, y_pred=df_preds_encoded, average="macro")
+    flt_f1_score: float = metrics.f1_score(
+        y_true=df_trues_encoded,
+        y_pred=df_preds_encoded,
+        average="macro",
+        zero_division=1
+    )
     return flt_f1_score
 
 
@@ -82,9 +87,15 @@ def hot_encode_insts(ls_trues: List[List], ls_preds: List[List]) -> Tuple[DataFr
     df_preds = pd.Series(ls_preds)
     df_trues_encoded: DataFrame = pd.DataFrame(mlb.fit_transform(df_trues), columns=mlb.classes_, index=df_trues.index)
     df_preds_encoded: DataFrame = pd.DataFrame(mlb.fit_transform(df_preds), columns=mlb.classes_, index=df_preds.index)
-    ls_range: List[int] = [int_x for int_x in range(15)]
-    df_trues_encoded: DataFrame = df_trues_encoded[ls_range]
-    df_preds_encoded: DataFrame = df_preds_encoded[ls_range]
+    df_trues_encoded.pop(-2)
+    df_preds_encoded.pop(-2)
+    ls_range: List[int] = [int_x for int_x in range(19)]
+    for int_inst in ls_range:
+        if int_inst not in df_trues_encoded.columns.to_list():
+            df_trues_encoded[int_inst] = [0] * len(df_trues_encoded)
+    for int_inst in ls_range:
+        if int_inst not in df_preds_encoded.columns.to_list():
+            df_preds_encoded[int_inst] = [0] * len(df_trues_encoded)
     return df_trues_encoded, df_preds_encoded
 
 
