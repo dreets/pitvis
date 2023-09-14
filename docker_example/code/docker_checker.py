@@ -53,11 +53,11 @@ def main(str_user: str, str_pass: str, bl_send: bool = False):
                     break
 
                 bl_results: bool = check_results(str_task=str_task)
-                if bl_results:
+                if not bl_results:
                     set_status(syn_values=syn_values, str_reason="Incorrect output", str_out="rejected", bl_s=bl_send)
                     break
 
-                set_status(syn_values=syn_values, str_reason="No reason", str_out="accepted", bl_s=bl_send)
+                set_status(syn_values=syn_values, str_reason="All tests have passed", str_out="accepted", bl_s=bl_send)
                 break
 
 
@@ -121,7 +121,7 @@ def check_docker(syn_sub: Submission) -> bool:
     print("Checking docker download...")
 
     process = run(
-        ["docker", "pull", syn_sub["name"].lower()],
+        ["docker", "pull", f"{syn_sub['dockerRepositoryName'].lower()}:v{syn_sub['versionNumber']}"],
         stdin=PIPE,
         stderr=PIPE,
         stdout=PIPE,
@@ -143,6 +143,8 @@ def check_run(syn_sub: Submission) -> bool:
     pt_csv: Path = pt_home.joinpath('data', 'outputs', '01.csv')
     if pt_csv.exists():
         pt_csv.unlink()
+    df_output = pd.DataFrame()
+    df_output.to_csv(pt_csv, index=False)
     process = run(
         [
             "docker",
@@ -154,7 +156,7 @@ def check_run(syn_sub: Submission) -> bool:
             f"-v={pt_home.parent.joinpath('outputs')}:{pt_home.joinpath('data', 'outputs')}",
             f"{syn_sub['name'].lower()}",
             f"{pt_home.joinpath('data', 'inputs', '01')}",
-            f"{pt_csv}",
+            f"{pt_home.joinpath('data', 'outputs', '01.csv')}",
         ],
         stdin=PIPE,
         stderr=PIPE,
