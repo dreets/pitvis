@@ -2,6 +2,7 @@
 import argparse
 import datetime
 import json
+import os
 import numpy as np
 import pandas as pd
 import re
@@ -143,7 +144,7 @@ def check_run(syn_sub: Submission) -> bool:
     pt_home: Path = Path().absolute()
     pt_csv: Path = pt_home.joinpath('data', 'outputs', '01.csv')
     if pt_csv.exists():
-        pt_csv.unlink()
+        os.remove(pt_csv)
     df_output = pd.DataFrame()
     df_output.to_csv(pt_csv, index=False)
     process = run(
@@ -157,7 +158,7 @@ def check_run(syn_sub: Submission) -> bool:
             f"-v={pt_home.parent.joinpath('outputs')}:{pt_home.joinpath('data', 'outputs')}",
             f"{syn_sub['dockerRepositoryName'].lower()}:v{syn_sub['versionNumber']}",
             f"{pt_home.joinpath('data', 'inputs', '01')}",
-            f"{pt_home.joinpath('data', 'outputs', '01.csv')}",
+            f"{pt_csv}",
         ],
         stdin=PIPE,
         stderr=PIPE,
