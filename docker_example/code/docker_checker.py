@@ -155,7 +155,7 @@ def check_run(syn_sub: Submission) -> bool:
             "--rm",
             f"-v={pt_home.parent.joinpath('inputs')}:{pt_home.joinpath('data', 'inputs')}",
             f"-v={pt_home.parent.joinpath('outputs')}:{pt_home.joinpath('data', 'outputs')}",
-            f"{syn_sub['name'].lower()}",
+            f"{syn_sub['dockerRepositoryName'].lower()}:v{syn_sub['versionNumber']}",
             f"{pt_home.joinpath('data', 'inputs', '01')}",
             f"{pt_home.joinpath('data', 'outputs', '01.csv')}",
         ],
