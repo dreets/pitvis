@@ -32,10 +32,11 @@ def main(str_user: str, str_pass: str, bl_send: bool = False):
                 print(f"Time={datetime.datetime.now()}.")
                 print(f"Checking submission {syn_sub['id']}.")
 
-                bl_new: bool = check_new(str_task=str_task, syn_sub=syn_sub)
-                if not bl_new:
-                    set_status(syn_values=syn_values, str_reason="Old submission", str_out="closed", bl_s=bl_send)
-                    break
+                if bl_send:
+                    bl_new: bool = check_new(str_task=str_task, syn_sub=syn_sub)
+                    if not bl_new:
+                        set_status(syn_values=syn_values, str_reason="Old submission", str_out="closed", bl_s=bl_send)
+                        break
 
                 bl_name: bool = check_name(str_task=str_task, syn_sub=syn_sub)
                 if not bl_name:
