@@ -154,7 +154,7 @@ def check_results(str_task):
             print("Results are in the incorrect form: int_instrument2 values are non-integers.")
             return False
     else:
-        if ls_headers != ["int_time", "int_step", "int_instrument1", "int_instrument2"]:
+        if ls_headers != ["int_instrument1", "int_instrument2", "int_step", "int_time"]:
             print("Results are in the incorrect form: header values are not "
                   "['int_time', 'int_step', 'int_instrument1', 'int_instrument2']")
             return False
