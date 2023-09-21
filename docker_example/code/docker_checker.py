@@ -69,7 +69,7 @@ def check_docker(syn_sub: Submission) -> bool:
     print("Checking docker download...")
 
     process = run(
-        ["docker", "pull", f"{syn_sub['dockerRepositoryName'].lower()}:v{syn_sub['name'].lower().split(':')[-1]}"],
+        ["docker", "pull", f"{syn_sub['dockerRepositoryName'].lower()}:{syn_sub['name'].lower().split(':')[-1]}"],
         stdin=PIPE,
         stderr=PIPE,
         stdout=PIPE,
@@ -103,7 +103,7 @@ def check_run(syn_sub: Submission) -> bool:
             "--rm",
             f"-v={pt_home.parent.joinpath('inputs')}:{pt_home.joinpath('data', 'inputs')}",
             f"-v={pt_home.parent.joinpath('outputs')}:{pt_home.joinpath('data', 'outputs')}",
-            f"{syn_sub['dockerRepositoryName'].lower()}:v{syn_sub['name'].lower().split(':')[-1]}",
+            f"{syn_sub['dockerRepositoryName'].lower()}:{syn_sub['name'].lower().split(':')[-1]}",
             f"{pt_home.joinpath('data', 'inputs', '01')}",
             f"{pt_csv}",
         ],
