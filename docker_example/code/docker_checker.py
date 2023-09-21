@@ -18,7 +18,7 @@ from typing import List
 
 
 def main(str_user: str, str_pass: str, int_id: int):
-    docker_login(str_user=str_user, str_pass=str_pass)
+    # docker_login(str_user=str_user, str_pass=str_pass)
     syn_client: Synapse = synapse_client_login(str_user=str_user, str_pass=str_pass)
 
     dt_tasks: Dict[str, int] = {"task1": 9615415, "task2": 9615416, "task3": 9615417}
@@ -69,7 +69,7 @@ def check_docker(syn_sub: Submission) -> bool:
     print("Checking docker download...")
 
     process = run(
-        ["docker", "pull", f"{syn_sub['dockerRepositoryName'].lower()}:v{syn_sub['versionNumber']}"],
+        ["docker", "pull", f"{syn_sub['dockerRepositoryName'].lower()}:v{syn_sub['name'].lower().split(':')[-1]}"],
         stdin=PIPE,
         stderr=PIPE,
         stdout=PIPE,
@@ -103,7 +103,7 @@ def check_run(syn_sub: Submission) -> bool:
             "--rm",
             f"-v={pt_home.parent.joinpath('inputs')}:{pt_home.joinpath('data', 'inputs')}",
             f"-v={pt_home.parent.joinpath('outputs')}:{pt_home.joinpath('data', 'outputs')}",
-            f"{syn_sub['dockerRepositoryName'].lower()}:v{syn_sub['versionNumber']}",
+            f"{syn_sub['dockerRepositoryName'].lower()}:v{syn_sub['name'].lower().split(':')[-1]}",
             f"{pt_home.joinpath('data', 'inputs', '01')}",
             f"{pt_csv}",
         ],
