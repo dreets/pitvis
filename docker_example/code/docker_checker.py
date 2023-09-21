@@ -55,7 +55,11 @@ def synapse_client_login(str_user: str, str_pass: str) -> Synapse:
 def check_name(str_task: str, syn_sub: Synapse) -> bool:
     """"Checking submission name is of the correct form"""
     print(f"Checking if submission name is of the form the correct form...")
-    matched = re.match(f"^pitvis_{str_task}_[a-zA-Z]+:v{syn_sub['versionNumber']}", syn_sub['name'].lower(), flags=re.I)
+    pitvis, task, team_name_version = syn_sub['name'].lower().split("_")
+    team, version = team_name_version.split(":")
+    team_match = re.match("^[a-zA-Z]+", team, flags=re.I)
+    version_match = re.match("^v[0-9]+", version, flags=re.I)
+    matched = (pitvis == "pitvis" and task == str_task and bool(team_match) and bool(version_match))
     if bool(matched):
         print("Name is of the correct form!")
         return True
