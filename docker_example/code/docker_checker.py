@@ -22,11 +22,11 @@ def main(str_user: str, str_pass: str, int_id: int):
     syn_client: Synapse = synapse_client_login(str_user=str_user, str_pass=str_pass)
 
     dt_tasks: Dict[str, int] = {"task1": 9615415, "task2": 9615416, "task3": 9615417}
-    print(f"Looking for submission id={int_id} with status='RECEIVED'")
+    print(f"Looking for submission id={int_id} with status='RECEIVED'.")
     for str_task in dt_tasks:
         for syn_sub, syn_status in syn_client.getSubmissionBundles(dt_tasks[str_task], status="RECEIVED"):
             if int(syn_sub["id"]) == int_id:
-                print(f"Checking submission {syn_sub['id']}.")
+                print(f"Found submission {syn_sub['id']}, checking...")
                 check_name(str_task=str_task, syn_sub=syn_sub)
                 check_docker(syn_sub=syn_sub)
                 check_run(syn_sub=syn_sub)
@@ -60,7 +60,7 @@ def check_name(str_task: str, syn_sub: Synapse) -> bool:
         print("Name is of the correct form!")
         return True
     else:
-        print("Name is of not of the correct form!")
+        print("Name is not of the correct form!")
         return False
 
 
