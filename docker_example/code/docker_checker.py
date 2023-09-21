@@ -147,10 +147,10 @@ def check_results(str_task):
             print("Results are in the incorrect form: header values are not "
                   "['int_instrument1', 'int_instrument2', 'int_time']")
             return False
-        if not np.array_equal(df_results["int_instrument1"], df_results["int_step"].astype(int)):
+        if not np.array_equal(df_results["int_instrument1"], df_results["int_instrument1"].astype(int)):
             print("Results are in the incorrect form: int_instrument1 values are non-integers.")
             return False
-        if not np.array_equal(df_results["int_instrument2"], df_results["int_step"].astype(int)):
+        if not np.array_equal(df_results["int_instrument2"], df_results["int_instrument2"].astype(int)):
             print("Results are in the incorrect form: int_instrument2 values are non-integers.")
             return False
     else:
@@ -161,10 +161,10 @@ def check_results(str_task):
         if not np.array_equal(df_results["int_step"], df_results["int_step"].astype(int)):
             print("Results are in the incorrect form: int_step values are non-integers.")
             return False
-        if not np.array_equal(df_results["int_instrument1"], df_results["int_step"].astype(int)):
+        if not np.array_equal(df_results["int_instrument1"], df_results["int_instrument1"].astype(int)):
             print("Results are in the incorrect form: int_instrument1 values are non-integers.")
             return False
-        if not np.array_equal(df_results["int_instrument2"], df_results["int_step"].astype(int)):
+        if not np.array_equal(df_results["int_instrument2"], df_results["int_instrument2"].astype(int)):
             print("Results are in the incorrect form: int_instrument2 values are non-integers.")
             return False
     print("Results are of the correct form!")
