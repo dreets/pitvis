@@ -1,4 +1,5 @@
 # global imports
+import argparse
 import cv2
 import numpy as np
 import os
@@ -8,12 +9,8 @@ from pathlib import Path
 from typing import List
 
 
-def main():
-    """required variables are {pt_videos} and {pt_images}"""
-    # pt_videos: Path =
-    # pt_images: Path =
-    # convert_videos_to_images(pt_videos=pt_videos, pt_images=pt_images)
-    pass
+def main(pt_videos: Path, pt_images: Path):
+    convert_videos_to_images(pt_videos=pt_videos, pt_images=pt_images)
 
 
 def convert_videos_to_images(pt_videos: Path, pt_images: Path):
@@ -59,4 +56,8 @@ def create_directory(pt: Path):
 
 
 if __name__ == "__main__":
-    main()
+    arg_parser = argparse.ArgumentParser()
+    arg_parser.add_argument("--pt_videos", type=str, help="videos path (parent directory)", required=True)
+    arg_parser.add_argument("--pt_images", type=str, help="images path (parent directory)", required=True)
+    args = vars(arg_parser.parse_args())
+    SystemExit(main(pt_videos=Path(args["pt_videos"]), pt_images=Path(args["pt_images"])))
